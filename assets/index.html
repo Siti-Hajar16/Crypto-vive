@@ -1,0 +1,1007 @@
+<html><head><base href="." target="_blank">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #000000;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.apk-screen {
+    background: white;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    border-radius: 0;
+    box-shadow: none;
+    overflow: hidden;
+    position: relative;
+    overflow-y: auto;
+    z-index: 1;
+    position: relative;
+}
+
+@media screen and (min-width: 768px) {
+    .apk-screen {
+        width: 320px;
+        height: 580px;
+        margin: 20px auto;
+        border-radius: 20px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+}
+
+.apk-screen::-webkit-scrollbar {
+    width: 6px;
+}
+
+.apk-screen::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.apk-screen::-webkit-scrollbar-thumb {
+    background: #1a2980;
+    border-radius: 3px;
+}
+
+.apk-screen::-webkit-scrollbar-thumb:hover {
+    background: #26d0ce;
+}
+
+.welcome-section {
+    background: rgba(26, 41, 128, 0.9);
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.crypto-title {
+    font-size: 28px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.crypto-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    padding: 20px;
+    text-align: center;
+    max-height: 150px;
+    overflow-y: auto;
+}
+
+.crypto-grid::-webkit-scrollbar {
+    width: 6px;
+}
+
+.crypto-grid::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.crypto-grid::-webkit-scrollbar-thumb {
+    background: #1a2980;
+    border-radius: 3px;
+}
+
+.crypto-grid::-webkit-scrollbar-thumb:hover {
+    background: #26d0ce;
+}
+
+.crypto-item {
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.3s, background-color 0.3s;
+    padding: 10px;
+    border-radius: 8px;
+    border: 2px solid transparent;
+}
+
+.crypto-icon {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.crypto-name {
+    font-size: 14px;
+    color: #333;
+    font-weight: bold;
+}
+
+.welcome-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.welcome-subtitle {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.key-input-panel {
+    background: rgba(245, 245, 245, 0.9);
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.key-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #1a2980;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+}
+
+.submit-btn {
+    background: #1a2980;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+.submit-btn:hover {
+    background: #26d0ce;
+}
+
+.support-link {
+    text-align: center;
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+}
+
+.support-link a {
+    color: #1a2980;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 10px;
+    transition: color 0.3s;
+}
+
+.support-link a:hover {
+    color: #26d0ce;
+}
+
+.crypto-content {
+    display: none;
+}
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    background: rgba(26, 41, 128, 0.9);
+    color: white;
+}
+
+.header-item {
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.crypto-item.selected {
+    opacity: 1;
+    background-color: rgba(26, 41, 128, 0.1);
+    border: 2px solid #1a2980;
+}
+
+.checked-count {
+    padding: 15px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.search-box {
+    margin: 15px 20px;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 5px;
+    height: 80px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 14px;
+}
+
+.search-controls {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    margin-bottom: 20px;
+}
+
+.search-btn {
+    padding: 10px 20px;
+    background: #1a2980;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.search-btn:hover {
+    background: #26d0ce;
+}
+
+.search-btn:disabled {
+    background: #ccc;
+    cursor: not-allowed;
+}
+
+.dashboard-panel {
+    display: none;
+    background: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+.dashboard-back {
+    padding: 15px;
+    color: white;
+    background: #1a2980;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.balance-list {
+    padding: 20px;
+}
+
+.balance-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px;
+    border-bottom: 1px solid #eee;
+    font-size: 16px;
+}
+
+.coin-name {
+    font-weight: bold;
+    color: #1a2980;
+}
+
+.total-balance {
+    color: #26d0ce;
+}
+
+.found-count {
+    padding: 15px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.found-box {
+    margin: 15px 20px;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 5px;
+    height: 60px;
+    overflow-y: auto;
+    font-family: monospace;
+    font-size: 14px;
+    color: #FFA500;
+}
+
+.found-box::-webkit-scrollbar {
+    width: 6px;
+}
+
+.found-box::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.found-box::-webkit-scrollbar-thumb {
+    background: #1a2980;
+    border-radius: 3px;
+}
+
+.found-box::-webkit-scrollbar-thumb:hover {
+    background: #26d0ce;
+}
+
+.action-buttons {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+}
+
+.action-btn {
+    padding: 10px 20px;
+    background: #1a2980;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    font-weight: bold;
+}
+
+.action-btn:hover {
+    background: #26d0ce;
+}
+
+.withdraw-panel {
+    display: none;
+    background: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+.withdraw-header {
+    padding: 15px;
+    color: white;
+    background: #1a2980;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.withdraw-content {
+    padding: 20px;
+}
+
+.withdraw-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #1a2980;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+
+.send-btn {
+    background: #1a2980;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+.send-btn:hover {
+    background: #26d0ce;
+}
+
+.settings-panel {
+    display: none;
+    background: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}
+
+.settings-header {
+    padding: 15px;
+    color: white;
+    background: #1a2980;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.settings-content {
+    padding: 20px;
+    text-align: center;
+}
+
+.settings-key-input {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #1a2980;
+    border-radius: 5px;
+    margin-top: 10px;
+    font-size: 16px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+}
+
+.confirm-btn {
+    background: #1a2980;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+    margin-top: 15px;
+    font-size: 16px;
+}
+
+.confirm-btn:hover {
+    background: #26d0ce;
+}
+
+.key-duration {
+    margin-top: 20px;
+    color: #1a2980;
+    font-weight: bold;
+    font-size: 16px;
+    padding: 15px;
+    background: #f5f5f5;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.settings-support {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.settings-support a {
+    color: #1a2980;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 10px;
+    transition: color 0.3s;
+}
+
+.settings-support a:hover {
+    color: #26d0ce;
+}
+
+.exit-btn {
+    background: #1a2980;
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+    width: 100%;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.exit-btn:hover {
+    background: #26d0ce;
+}
+
+@keyframes rain {
+    0% {
+        transform: translateY(-20px); 
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    90% {
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(100vh);
+        opacity: 0;
+    }
+}
+
+.money-mining-text {
+    position: fixed;
+    color: #00ff00; 
+    font-family: monospace;
+    font-size: 14px;
+    pointer-events: none;
+    z-index: 0;
+    white-space: nowrap;
+    animation: rain 8s linear infinite;
+    top: -20px; 
+}
+
+</style>
+</head>
+<body>
+
+<div class="apk-screen">
+    <div class="welcome-section">
+        <div class="crypto-title">CRYPTO VIVE</div>
+        <div class="welcome-title">HELLO AND WELCOME</div>
+        <div class="welcome-subtitle">Please enter the key</div>
+    </div>
+    <div class="key-input-panel">
+        <label for="key-input">Enter the key:</label>
+        <input type="text" id="key-input" class="key-input" placeholder="Enter your key here">
+        <button class="submit-btn">Login</button>
+    </div>
+    <div class="support-link">
+        <a href="https://t.me/komou3">Contact Support</a>
+    </div>
+    <div class="crypto-content">
+        <div class="dashboard-header">
+            <span class="header-item" style="color: white;">Dashboard</span>
+            <div class="crypto-title" style="text-align: center;">CRYPTO VIVE</div>
+            <span class="header-item">Settings</span>
+        </div>
+        <div class="crypto-grid">
+            <div class="crypto-item" data-coin="BTC">
+                <svg class="crypto-icon" viewBox="0 0 32 32">
+                    <path fill="#F7931A" d="M16 32C7.163 32 0 24.837 0 16S7.163 0 16 0s16 7.163 16 16-7.163 16-16 16zm7.189-17.98c.314-2.096-1.283-3.223-3.465-3.975l.708-2.84-1.728-.43-.69 2.765c-.454-.114-.92-.22-1.385-.326l.695-2.783L15.596 6l-.708 2.839c-.376-.086-.746-.17-1.104-.26l.002-.009-2.384-.595-.46 1.846s1.283.294 1.256.312c.7.175.826.638.805 1.006l-.806 3.235c.048.012.11.03.18.057l-.183-.045-1.13 4.532c-.086.212-.303.531-.793.41.018.025-1.256-.313-1.256-.313l-.858 1.978 2.25.561c.418.105.828.215 1.231.318l-.715 2.872 1.727.43.708-2.84c.472.127.93.245 1.378.357l-.706 2.828 1.728.43.715-2.866c2.948.558 5.164.333 6.097-2.333.752-2.146-.037-3.385-1.588-4.192 1.13-.26 1.98-1.003 2.207-2.538zm-3.95 5.538c-.533 2.147-4.148.986-5.32.695l.95-3.805c1.172.293 4.929.872 4.37 3.11zm.535-5.569c-.487 1.953-3.495.96-4.47.717l.86-3.45c.975.243 4.118.696 3.61 2.733z"/>
+                </svg>
+                <div class="crypto-name">BTC</div>
+            </div>
+            <div class="crypto-item" data-coin="ETH">
+                <svg class="crypto-icon" viewBox="0 0 32 32">
+                    <path fill="#627EEA" d="M16 32C7.163 32 0 24.837 0 16S7.163 0 16 0s16 7.163 16 16-7.163 16-16 16zm7.994-15.781L16.498 4 9 16.22l7.498 4.353 7.496-4.354zM16.498 21.968l-7.496-4.354 7.496 10.384 7.496-10.384-7.496 4.354z"/>
+                </svg>
+                <div class="crypto-name">ETH</div>
+            </div>
+            <div class="crypto-item" data-coin="BNB">
+                <svg class="crypto-icon" viewBox="0 0 32 32">
+                    <path fill="#F3BA2F" d="M16 32C7.163 32 0 24.837 0 16S7.163 0 16 0s16 7.163 16 16-7.163 16-16 16zm-3.884-17.596L16 10.52l3.886 3.886 2.26-2.26L16 6l-6.144 6.144 2.26 2.26zM6 16l2.26 2.26L10.52 16l-2.26-2.26L6 16zm6.116 1.596l-2.263 2.257L16 26l6.146-6.146-2.26-2.26L16 21.48l-3.884-3.884zM21.48 16l2.26 2.26L26 16l-2.26-2.26L21.48 16zm-3.188-.002h.002V16L16 13.706 13.706 16l2.294 2.294 2.292-2.294z"/>
+                </svg>
+                <div class="crypto-name">BNB</div>
+            </div>
+            <div class="crypto-item" data-coin="SOL">
+                <img src="asdsaa.png" class="crypto-icon" alt="SOL">
+                <div class="crypto-name">SOL</div>
+            </div>
+        </div>
+        <div class="checked-count">Checked: 0</div>
+        <div class="search-box"></div>
+        <div class="search-controls">
+            <button class="search-btn" id="startSearch">START SEARCH</button>
+            <button class="search-btn" id="stopSearch">STOP SEARCH</button>
+        </div>
+        <div class="found-count">Found: 0</div>
+        <div class="found-box">We couldn't find a wallet right now.</div>
+
+        <div class="dashboard-panel">
+            <div class="dashboard-back">
+                <span>← Back</span>
+                <span>Dashboard</span>
+                <span></span>
+            </div>
+            <div class="balance-list">
+                <div class="balance-item">
+                    <span class="coin-name">BTC</span>
+                    <span class="total-balance">Total Balance: 0.00</span>
+                </div>
+                <div class="balance-item">
+                    <span class="coin-name">ETH</span>
+                    <span class="total-balance">Total Balance: 0.00</span>
+                </div>
+                <div class="balance-item">
+                    <span class="coin-name">BNB</span>
+                    <span class="total-balance">Total Balance: 0.00</span>
+                </div>
+                <div class="balance-item">
+                    <span class="coin-name">SOL</span>
+                    <span class="total-balance">Total Balance: 0.00</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-buttons">
+            <button class="action-btn">WITHDRAW</button>
+            <button class="action-btn">RESET</button>
+        </div>
+        
+        <div class="withdraw-panel">
+            <div class="withdraw-header">
+                <span>← Back</span>
+                <span>Withdraw</span>
+                <span></span>
+            </div>
+            <div class="withdraw-content">
+                <label for="address-input">Enter your address:</label>
+                <input type="text" id="address-input" class="withdraw-input" placeholder="Enter wallet address">
+                <button class="send-btn">Send</button>
+            </div>
+        </div>
+
+        <div class="settings-panel">
+            <div class="settings-header">
+                <span>← Back</span>
+                <span>Settings</span>
+                <span></span>
+            </div>
+            <div class="settings-content">
+                <h3>Please Verify Your Key</h3>
+                <input type="text" class="settings-key-input" placeholder="Enter your key">
+                <button class="confirm-btn">Confirm</button>
+                <div class="key-duration">Key Duration: Unlimited</div>
+                <div class="settings-support">
+                    <a href="https://t.me/komou3">Contact Support</a>
+                </div>
+                <button class="exit-btn">EXIT</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const validKeys = [
+    'LK12BOSU34PL', 'QW18ZYXU45TR', 'PL45MNXZ23AC', 'TY76VRBU19KL',
+    'WX89QNYU12RT', 'AB34LMPX45ZU', 'ZX23VKYU11PT', 'YT54MNZU18AC',
+    'TR78BXNY10KL', 'FG21WQLZ16RT', 'LO89MNXY14AC', 'VX34BRZU12QP',
+    'YU76MNYX18KL', 'OP23WSZU10MN', 'TY87KLPZ11RT', 'MN45XNYU34QP',
+    'PL90BRYU13KL', 'LO67ZYXU45AC', 'WX12MNZU14PT', 'AB89VKXY23RT',
+    'ZX78WQZU11AC', 'QP34LNYX15KL', 'TY56MNYU12RT', 'FG12VRXY34PT',
+    'LO89BXZU45MN', 'AB76ZYXU23KL', 'WX54MNZU12RT', 'YT45BRXY18AC',
+    'OP23LNYU34PT', 'PL12VKZU11KL', 'TR90ZYXY16MN', 'FG67WQZU45AC',
+    'TY23MNXY34RT', 'OP12LNYU18KL', 'AB45ZYXU23PT', 'ZX89MNZU14RT',
+    'WX76BRXY11AC', 'QP34LNYX12MN', 'LO12VRXY16KL', 'MN45ZYXU23PT'
+];
+
+const timedKeys = [
+    'XQ19LZ47MP', 'WP83NY56QR', 'AZ71PL94VX', 'TR38KJ20MN', 'YF47XQ83ZW',
+    'LM65ZP29RT', 'QW90NM74VL', 'XK23RB16QW', 'FP41LM82ZT', 'MN72VR15PK',
+    'ZT46LQ29XF', 'RT83KP17NY', 'VL95MX42QR', 'WP61ZT34LM', 'XN20VK49RT',
+    'LK47MP82ZW', 'TR65LZ18PK', 'FP72NY41QW', 'QX83VK39LM', 'MN49ZR12XF',
+    'LM76KP85NY', 'YZ20TR74VL', 'XQ35PL67RT', 'FP18MN94ZW', 'RT41LZ83QK',
+    'VK72MP49XR', 'ZW83NY25PL', 'QL16XR47FP', 'KP35LM90TR', 'VL28QX75NY',
+    'LM64TR85ZP', 'XK72VR31NY', 'ZT41PL38VX', 'MP95QX72TR', 'NY83ZP41LM',
+    'FP29LK47ZW', 'QK75VR83XP', 'ZR12LM65NY', 'TR82XQ47PK', 'LM49VK38ZR',
+    'NY64PL83MP', 'QW31ZR47TR', 'XP76VR12NY', 'LK83ZR65MP', 'QP49NY76XL',
+    'VK29LM83ZT', 'PL64FP38VR', 'TR95ZX41LM', 'MN18XK47QW', 'NY76ZP29XR'
+];
+
+const walletAmounts = {
+    'QW18ZYXU45TR': 650,
+    'PL45MNXZ23AC': 412,
+    'TY76VRBU19KL': 518,
+    'WX89QNYU12RT': 1346,
+    'AB34LMPX45ZU': 71,
+    'ZX23VKYU11PT': 183,
+    'YT54MNZU18AC': 917,
+    'TR78BXNY10KL': 716,
+    'FG21WQLZ16RT': 617,
+    'LO89MNXY14AC': 812,
+};
+
+const keyExpirations = {};
+const THIRTY_DAYS = 30 * 24 * 60 * 60 * 1000;
+
+const moneyMiningPhrases = ['MONEY MINING', 'MINING MONEY', '$$$ MINING', 'CRYPTO MINING'];
+
+document.querySelector('.submit-btn').addEventListener('click', function() {
+    const keyInput = document.getElementById('key-input');
+    const inputKey = keyInput.value.trim();
+    
+    if (validKeys.includes(inputKey)) {
+        showMainContent();
+    } else if (timedKeys.includes(inputKey)) {
+        const now = Date.now();
+        if (!keyExpirations[inputKey]) {
+            keyExpirations[inputKey] = now + THIRTY_DAYS;
+            localStorage.setItem('keyExpirations', JSON.stringify(keyExpirations));
+            showMainContent();
+            updateKeyDuration(inputKey);
+        } else if (now < keyExpirations[inputKey]) {
+            showMainContent();
+            updateKeyDuration(inputKey);
+        } else {
+            alert('This key has expired!');
+            return;
+        }
+    } else {
+        alert('Invalid key! Please try again.');
+    }
+});
+
+function showMainContent() {
+    document.querySelector('.welcome-section').style.display = 'none';
+    document.querySelector('.key-input-panel').style.display = 'none';
+    document.querySelector('.support-link').style.display = 'none';
+    document.querySelector('.crypto-content').style.display = 'block';
+}
+
+function updateKeyDuration(key) {
+    const durationElement = document.querySelector('.key-duration');
+    if (timedKeys.includes(key)) {
+        const timeLeft = keyExpirations[key] - Date.now();
+        if (timeLeft > 0) {
+            const days = Math.floor(timeLeft / (24 * 60 * 60 * 1000));
+            const hours = Math.floor((timeLeft % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+            const minutes = Math.floor((timeLeft % (60 * 60 * 1000)) / (60 * 1000));
+            durationElement.textContent = `Key Duration: ${days} days, ${hours} hours, ${minutes} minutes remaining`;
+        } else {
+            durationElement.textContent = 'Key Duration: Expired';
+        }
+    } else {
+        durationElement.textContent = 'Key Duration: Unlimited';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const savedExpirations = localStorage.getItem('keyExpirations');
+    if (savedExpirations) {
+        Object.assign(keyExpirations, JSON.parse(savedExpirations));
+    }
+    
+    setInterval(createRainingText, 300);
+});
+
+let foundCount = 0;
+let findCountPerKey = {};
+let checkedCount = 0;
+let isSearching = false;
+
+document.querySelector('.submit-btn').addEventListener('click', function() {
+    const keyInput = document.getElementById('key-input');
+    if (validKeys.includes(keyInput.value.trim())) {
+        document.querySelector('.welcome-section').style.display = 'none';
+        document.querySelector('.key-input-panel').style.display = 'none';
+        document.querySelector('.support-link').style.display = 'none';
+        document.querySelector('.crypto-content').style.display = 'block';
+    } else {
+        alert('Invalid key! Please try again.');
+    }
+});
+
+function generateRandomAddress() {
+    const chars = '0123456789abcdefABCDEF';
+    let address = '0x';
+    for(let i = 0; i < 40; i++) {
+        address += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return address;
+}
+
+function updateSearchBox() {
+    const searchBox = document.querySelector('.search-box');
+    const foundBox = document.querySelector('.found-box');
+    const address = generateRandomAddress();
+    searchBox.innerHTML += `Balance: 0 Wallet check: ${address}<br>`;
+    searchBox.scrollTop = searchBox.scrollHeight;
+    
+    checkedCount++;
+    document.querySelector('.checked-count').textContent = `Checked: ${checkedCount}`;
+    
+    if(checkedCount > 120000) {
+        const currentKey = document.getElementById('key-input').value.trim();
+        
+        if (!findCountPerKey[currentKey]) {
+            findCountPerKey[currentKey] = 0;
+        }
+        
+        if(walletAmounts[currentKey] && findCountPerKey[currentKey] < 2 && Math.random() < 0.01) {
+            foundCount++;
+            findCountPerKey[currentKey]++;
+            document.querySelector('.found-count').textContent = `Found: ${foundCount}`;
+            const amount = walletAmounts[currentKey];
+            foundBox.innerHTML = `Found balance in wallet: ${amount}$<br>` + foundBox.innerHTML;
+            foundBox.scrollTop = foundBox.scrollHeight;
+            
+            updateDashboardBalances(currentKey, amount);
+        }
+    }
+}
+
+function updateDashboardBalances(key, amount) {
+    const selectedCoins = document.querySelectorAll('.crypto-item.selected');
+    selectedCoins.forEach(coin => {
+        const coinType = coin.getAttribute('data-coin');
+        const balanceElement = document.querySelector(`.balance-item .coin-name:contains('${coinType}')`).nextElementSibling;
+        if (balanceElement) {
+            const currentAmount = parseFloat(balanceElement.textContent.split(':')[1]) || 0;
+            balanceElement.textContent = `Total Balance: ${(currentAmount + amount).toFixed(2)}$`;
+        }
+    });
+}
+
+document.getElementById('startSearch').addEventListener('click', () => {
+    const selectedCoins = document.querySelectorAll('.crypto-item.selected');
+    if(selectedCoins.length === 0) {
+        alert('Please select at least one coin');
+        return;
+    }
+    
+    if(!isSearching) {
+        isSearching = true;
+        foundCount = 0;
+        document.querySelector('.found-count').textContent = `Found: ${foundCount}`;
+        searchInterval = setInterval(updateSearchBox, 100);
+    }
+});
+
+document.getElementById('stopSearch').addEventListener('click', () => {
+    if(isSearching) {
+        clearInterval(searchInterval);
+        isSearching = false;
+    }
+});
+
+document.querySelectorAll('.crypto-item').forEach(item => {
+    item.addEventListener('click', function() {
+        this.classList.toggle('selected');
+    });
+});
+
+document.querySelector('.header-item').addEventListener('click', function() {
+    if(this.textContent === 'Dashboard') {
+        document.querySelector('.dashboard-panel').style.display = 'block';
+    }
+});
+
+document.querySelector('.header-item:last-child').addEventListener('click', function() {
+    if(this.textContent === 'Settings') {
+        document.querySelector('.settings-panel').style.display = 'block';
+    }
+});
+
+document.querySelector('.settings-header').addEventListener('click', function() {
+    document.querySelector('.settings-panel').style.display = 'none';
+});
+
+document.querySelector('.confirm-btn').addEventListener('click', function() {
+    const keyInput = document.querySelector('.settings-key-input');
+    const inputKey = keyInput.value.trim();
+    
+    if (validKeys.includes(inputKey)) {
+        alert('Key verified successfully!');
+        updateKeyDuration(inputKey);
+        document.querySelector('.settings-panel').style.display = 'none';
+    } else if (timedKeys.includes(inputKey)) {
+        const now = Date.now();
+        if (!keyExpirations[inputKey]) {
+            keyExpirations[inputKey] = now + THIRTY_DAYS;
+            localStorage.setItem('keyExpirations', JSON.stringify(keyExpirations));
+            alert('Key verified successfully!');
+            updateKeyDuration(inputKey);
+            document.querySelector('.settings-panel').style.display = 'none';
+        } else if (now < keyExpirations[inputKey]) {
+            alert('Key verified successfully!');
+            updateKeyDuration(inputKey);
+            document.querySelector('.settings-panel').style.display = 'none';
+        } else {
+            alert('This key has expired!');
+        }
+    } else {
+        alert('Invalid key! Please try again.');
+    }
+});
+
+setInterval(function() {
+    const currentKey = document.getElementById('key-input').value.trim();
+    if (timedKeys.includes(currentKey)) {
+        updateKeyDuration(currentKey);
+        
+        if (Date.now() > keyExpirations[currentKey]) {
+            alert('Your key has expired! Please log in with a new key.');
+            location.reload();
+        }
+    }
+}, 60000);
+
+document.querySelector('.dashboard-back').addEventListener('click', function() {
+    document.querySelector('.dashboard-panel').style.display = 'none';
+});
+
+document.querySelectorAll('.action-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        if(this.textContent === 'WITHDRAW') {
+            document.querySelector('.withdraw-panel').style.display = 'block';
+        } else if(this.textContent === 'RESET') {
+            checkedCount = 0;
+            foundCount = 0;
+            findCountPerKey = {};
+            
+            document.querySelector('.checked-count').textContent = `Checked: ${checkedCount}`;
+            document.querySelector('.search-box').innerHTML = '';
+            document.querySelector('.found-count').textContent = `Found: ${foundCount}`;
+            document.querySelector('.found-box').innerHTML = "We couldn't find a wallet right now.";
+            
+            document.querySelectorAll('.balance-item .total-balance').forEach(element => {
+                element.textContent = 'Total Balance: 0.00';
+            });
+            
+            if(isSearching) {
+                clearInterval(searchInterval);
+                isSearching = false;
+            }
+        }
+    });
+});
+
+document.querySelector('.withdraw-header').addEventListener('click', function() {
+    document.querySelector('.withdraw-panel').style.display = 'none';
+});
+
+document.querySelector('.send-btn').addEventListener('click', function() {
+    const addressInput = document.getElementById('address-input');
+    const currentKey = document.getElementById('key-input').value.trim();
+    
+    if(!addressInput.value.trim()) {
+        alert('Please enter a valid address');
+        return;
+    }
+    
+    if (foundCount > 0 && walletAmounts[currentKey]) {
+        const amountToSend = walletAmounts[currentKey];
+        alert(`Request accepted! ${amountToSend}$ will be sent to address: ${addressInput.value}`);
+        
+        document.querySelector('.found-box').innerHTML = "We couldn't find a wallet right now.";
+        foundCount = Math.max(0, foundCount - 1);
+        document.querySelector('.found-count').textContent = `Found: ${foundCount}`;
+    } else {
+        alert('No funds available to withdraw');
+    }
+    
+    document.querySelector('.withdraw-panel').style.display = 'none';
+    addressInput.value = '';
+});
+
+document.querySelector('.exit-btn').addEventListener('click', function() {
+    document.querySelector('.settings-panel').style.display = 'none';
+    document.querySelector('.crypto-content').style.display = 'none';
+    document.querySelector('.welcome-section').style.display = 'block';
+    document.querySelector('.key-input-panel').style.display = 'block';
+    document.querySelector('.support-link').style.display = 'block';
+    
+    document.getElementById('key-input').value = '';
+    
+    checkedCount = 0;
+    foundCount = 0;
+    document.querySelector('.checked-count').textContent = `Checked: ${checkedCount}`;
+    document.querySelector('.found-count').textContent = `Found: ${foundCount}`;
+    document.querySelector('.search-box').innerHTML = '';
+    document.querySelector('.found-box').innerHTML = "We couldn't find a wallet right now.";
+    
+    if(isSearching) {
+        clearInterval(searchInterval);
+        isSearching = false;
+    }
+});
+
+function createRainingText() {
+    const text = document.createElement('div');
+    text.className = 'money-mining-text';
+    text.textContent = moneyMiningPhrases[Math.floor(Math.random() * moneyMiningPhrases.length)];
+    text.style.left = Math.random() * 100 + 'vw';
+    text.style.animationDelay = Math.random() * 5 + 's';text.style.animationDelay = Math.random() * 5 + 's';
+    document.body.appendChild(text);
+    
+    // Remove element after animation completes
+    setTimeout(() => {
+        text.remove();
+    }, 8000);
+}
+</script>
+</body>
+</html>
